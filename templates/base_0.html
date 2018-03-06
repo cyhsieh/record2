@@ -12,11 +12,8 @@
 </head>
 <body>
     <div class='container'>
-        <h1>{{title}}</h1>
-        {% load crispy_forms_tags %}
-        {% crispy form %}
+        {% block content %}{% endblock %}
     </div>
-    
     
 </body>
 </html>

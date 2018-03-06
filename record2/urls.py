@@ -20,6 +20,12 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', views.hello),
-    url(r'^hello$', views.hello),
+    # url(r'^$', views.list_bulletin),
+    # url(r'^list_bulletin$', views.list_bulletin),
+    # url(r'^new_bulletin$', views.new_bulletin),
+    # url(r'^edit_bulletin/(\d+)/$', views.edit_bulletin),
+    # url(r'^edit_bulletin/(\d+)/$', views.edit_bulletin),
+    url(r'^list_record/$', views.list_record),
+    url(r'^new_record/$', views.new_record), 
+    # url(r'^edit_record/$', views.edit_record),
 ]
