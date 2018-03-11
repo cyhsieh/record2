@@ -11,6 +11,10 @@ MONEY_FLOW = (
     ('out', _("支出")), ('in', _("收入"))
 )
 
+COST_TYPE = (
+        ('')
+)
+
 class Bulletin(models.Model):
     bulletin_type = models.CharField(_("Type"), max_length=20, choices=TYPE_CHOICES)
     title = models.CharField(_("Title"), max_length=255)
@@ -27,6 +31,9 @@ class Bulletin(models.Model):
     def __str__(self):
         return self.title
 
+#class Costtype(model.Model):
+#    type = (
+
 class Record(models.Model):
     flow_type = models.CharField(_("流向"), max_length=10, choices=MONEY_FLOW)
     item = models.CharField(_("項目"), max_length=50)
@@ -35,5 +42,15 @@ class Record(models.Model):
 
     def __str__(self):
         return self.item
+
+class testClass(models.Model):
+    typea = models.CharField(_("屬性A"), max_length=10)
+    typeb = models.CharField(_("attrB"), max_length=20)
+
+    #def __str__(self):
+    #    return self.typea
+
+
+
 
 

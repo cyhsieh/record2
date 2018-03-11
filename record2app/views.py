@@ -55,5 +55,3 @@ def new_record(request):
     record_form= forms.RecordForm()
     return render(request, "new_record.html", locals())
 
-
-

@@ -26,6 +26,6 @@ urlpatterns = [
     # url(r'^edit_bulletin/(\d+)/$', views.edit_bulletin),
     # url(r'^edit_bulletin/(\d+)/$', views.edit_bulletin),
     url(r'^list_record/$', views.list_record),
-    url(r'^new_record/$', views.new_record), 
+    url(r'^new_record/$', views.new_record),
     # url(r'^edit_record/$', views.edit_record),
 ]
