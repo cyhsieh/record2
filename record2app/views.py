@@ -47,11 +47,24 @@ def edit_bulletin(request,id=None):
 
 def list_record(request):
     title = "List record Page"
-    records = Record.objects.all().order_by('-id')
+    records = Record.objects.all().order_by('-purch_date')
     return render(request, "list_record.html", locals()) 
 
 def new_record(request):
-    title = "new record page"
+    #title = "new record page"
     record_form= forms.RecordForm()
     return render(request, "new_record.html", locals())
+
+def new_record2(request):
+    if request.method == "POST":
+        form = forms.RecordForm2(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/list_record')
+        else:
+            message = "驗證錯誤！"
+    else:
+        record_form = forms.RecordForm2()
+        return render(request, "new_record2.html", locals())
+
 

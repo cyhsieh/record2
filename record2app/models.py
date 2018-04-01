@@ -8,7 +8,7 @@ TYPE_CHOICES = (
 )
 
 MONEY_FLOW = (
-    ('out', _("支出")), ('in', _("收入"))
+    ('支出', _("支出")), ('收入', _("收入"))
 )
 
 COST_TYPE = (
@@ -31,8 +31,12 @@ class Bulletin(models.Model):
     def __str__(self):
         return self.title
 
-#class Costtype(model.Model):
-#    type = (
+class Costtype(models.Model):
+    typecode = models.CharField(_("類別代碼"), max_length=5)
+    typename = models.CharField(_("類別"), max_length=20)
+
+    def __str__(self):
+        return self.typename
 
 class Record(models.Model):
     flow_type = models.CharField(_("流向"), max_length=10, choices=MONEY_FLOW)

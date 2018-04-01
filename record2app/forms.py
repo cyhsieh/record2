@@ -138,6 +138,28 @@ class RecordForm(forms.ModelForm):
     #     ) 
 
 
+class RecordForm2(forms.ModelForm):
+    class Meta:
+        model=Record
+        fields = ['flow_type','item', 'amount', 'purch_date']
+    """
+    def __init__(self, *args, **kwargs):
+        super(RecordForm2, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_action = "."
+        self.helper.form_method = "POST"
 
-
+        self.helper.layout = layout.Layout(
+            layout.Fieldset(
+                'input_field',
+                'function_field',
+            ),
+            layout.Fieldset(
+                
+            ),
+            layout.ButtonHolder(
+                Submit('submit', '存檔'),
+                Submit('cancel', '取消', css_class='btn-warning')
+            )
+        )"""
 
