@@ -1,0 +1,49 @@
+
+{% extends "movies/base_two_columns.html" %}
+{% load i18n utility_tags  %}
+
+{% block sidebar %}
+<div class="filters">
+  <h6>{% trans "Filter by Genre" %}</h6>
+  <div class="list-group">
+    <a class="list-group-item{% if not facets.selected.genre %}active{% endif %}" href="{% append_to_query genre="" page="" %}">{% trans "All" %}</a>
+    {% for cat in facets.categories.genres %}
+    <a class="list-group-item{% if facets.selected.genre == cat %}active{% endif %}" href="{% append_to_query genre=cat.pk page="" %}">{{ cat }}</a>
+    {% endfor %}
+  </div>
+
+  <h6>{% trans "Filter by Director" %}</h6>
+  <div class="list-group">
+    <a class="list-group-item{% if not facet.selected.director %}active{% endif %}" href="{% append_to_query director ="" page="" %}"></a>
+    {% for cat in facets.categories.directors %}
+    <a class="list-group-item{% if facets.selected.director == cat %}active{% endif %}" href="{% append_to_query director=cat.pk page="" %}">{{ cat }}</a>
+    {% endfor %}
+  </div>
+
+  <h6>{% trans "Filter by Actor" %}</h6>
+  <div class="list-group">
+    <a class="list-group-item{% if not facet.selected.actor %}active{% endif %}" href="{#% append_to_query actor ="" page="" %#}">{% trans "All" %}</a>
+    {% for cat in facets.categories.actors %}
+    <a class="list-group-item{% if facets.selected.actor == cat %}active{% endif %}" href="{% append_to_query actor=cat.pk page="" %}">{{ cat }}</a>
+    {% endfor %}
+  </div>
+
+  <h6>{% trans "Filter by rating" %}</h6>
+  <div class="list-group">
+    <a class="list-group-item{% if not facet.selected.rating %}active{% endif %}" href="{#% append_to_query rating ="" page="" %#}">{% trans "All" %}</a>
+    {% for r_val, r_display in facets.categories.ratigs %}
+    <a class="list-group-item{% if facets.selected.rating.0 == r_val %}active{% endif %}" href="{% append_to_query rating=r_val page="" %}">{{ r_display }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="movie_list">
+  {% for movie in object_list %}
+  <div class="movie">
+    <h3>{{ movie.title }}</h3>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

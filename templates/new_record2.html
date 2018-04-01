@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {{title}}
+    {#{% load crispy_forms_tags %}#}
+    {#{% crispy record_form %}#}
+    <form action="." method="post">
+      <!--<div class="form-group">-->
+      {% csrf_token %}
+        <table class="table">
+          {{ record_form.as_table }}
+        </table>
+        <input class="btn btn-success" type="submit" value="送出">
+        <input class="btn btn-warning" type="submit" value="取消">
+      <!--</div>-->
+    </form>
+
+{% endblock %}
