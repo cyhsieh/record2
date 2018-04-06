@@ -46,7 +46,7 @@ def edit_bulletin(request,id=None):
 
 
 def list_record(request):
-    title = "List record Page"
+    title = "記帳紀錄"
     records = Record.objects.all().order_by('-purch_date')
     return render(request, "list_record.html", locals()) 
 
