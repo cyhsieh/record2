@@ -5,19 +5,21 @@
         <thead class="thead-dark">
           <tr>
             <!--<th>ID</th>-->
-            <th>Date</th>
-            <th>Flow</th>
-            <th>Item</th>
-            <th>Amount</th>
+            <th>日期</th>
+            <th>項目</th>
+            <th>流向</th>
+            <th>金額</th>
+            <th>功能</th>
           </tr>
         </thead>
         {% for record in records %}
             <tr>
               <!--<td>{{ record.id }}</td>-->
                 <td>{{ record.purch_date }}</td>
+                <td><a href="/edit_record/{{ record.id }}">{{ record.item }}</a></td>
                 <td>{{ record.flow_type }}</td>
-                <td>{{ record.item }}</td>
                 <td>{{ record.amount }}</td>
+                <td> <a href="/delete_record/{{ record.id }}">X</a></td>
             </tr>
         {% endfor %}
     </table>

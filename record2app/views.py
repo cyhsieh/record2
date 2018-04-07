@@ -41,21 +41,21 @@ def edit_bulletin(request,id=None):
         edit_form = forms.BulletinForm(instance=edit_post)
         return render(request, "edit_bulletin.html", locals())
 
-
-
-
-
 def list_record(request):
     title = "記帳紀錄"
-    records = Record.objects.all().order_by('-purch_date')
+    records = Record.objects.all().order_by('-purch_date', '-create_date')
     return render(request, "list_record.html", locals()) 
 
+
+'''
 def new_record(request):
-    #title = "new record page"
+    title = "新增紀錄"
     record_form= forms.RecordForm()
     return render(request, "new_record.html", locals())
+    '''
 
 def new_record2(request):
+    title = "新增紀錄"
     if request.method == "POST":
         form = forms.RecordForm2(request.POST)
         if form.is_valid():
@@ -66,5 +66,26 @@ def new_record2(request):
     else:
         record_form = forms.RecordForm2()
         return render(request, "new_record2.html", locals())
+
+def edit_record(request, id=None):
+    if request.method == "POST":
+        if 'cancel' in request.POST:
+            return redirect('/list_record')
+        # receive edit form
+        else:
+            edit_rec = Record.objects.get(id=id)
+            form = forms.RecordForm2(request.POST, instance=edit_rec)
+            if form.is_valid():
+                form.save()
+                return redirect('/list_record')
+    # from url
+    else:
+        title = "編輯紀錄"
+        edit_rec = Record.objects.get(id=id)
+        edit_form = forms.RecordForm2(instance=edit_rec)
+        return render(request, "edit_record.html", locals())
+
+
+
 
 
