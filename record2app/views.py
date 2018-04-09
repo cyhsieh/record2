@@ -85,6 +85,10 @@ def edit_record(request, id=None):
         edit_form = forms.RecordForm2(instance=edit_rec)
         return render(request, "edit_record.html", locals())
 
+def delete_record(request, id=None):
+    del_rec = Record.objects.get(id=id)
+    del_rec.delete()
+    return redirect('/list_record')
 
 
 

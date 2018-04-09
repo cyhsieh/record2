@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'record2app',
     'movies',
     'crispy_forms',
+    'testapp',
 ]
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 MIDDLEWARE = [

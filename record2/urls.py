@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from record2app import views
 from movies import views as movieviews
+from testapp import views as testviews
 from django.urls import path
 from django.conf.urls import url
 
@@ -29,6 +30,8 @@ urlpatterns = [
     # url(r'^new_record/$', views.new_record),
     url(r'^new_record2/$', views.new_record2),
     url(r'^edit_record/(\d+)/$', views.edit_record),
+    url(r'^delete_record/(\d+)/$', views.delete_record),
+    url(r'^testindex/$', testviews.testindex)
     # url(r'^movie_base/$', movieviews.movie_base),
     # url(r'^movie_list/$', movieviews.movie_list),
     #url(r'^new_record/$', views.new_record),

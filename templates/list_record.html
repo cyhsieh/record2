@@ -19,7 +19,7 @@
                 <td><a href="/edit_record/{{ record.id }}">{{ record.item }}</a></td>
                 <td>{{ record.flow_type }}</td>
                 <td>{{ record.amount }}</td>
-                <td> <a href="/delete_record/{{ record.id }}">X</a></td>
+                <td><a href="/delete_record/{{ record.id}}"><span class='glyphicon glyphicon-remove'></span></a></td>
             </tr>
         {% endfor %}
     </table>
