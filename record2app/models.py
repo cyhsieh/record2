@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
@@ -42,7 +43,7 @@ class Record(models.Model):
     flow_type = models.CharField(_("流向"), max_length=10, choices=MONEY_FLOW, default=MONEY_FLOW[0][0])
     item = models.CharField(_("項目"), max_length=50)
     amount = models.IntegerField(_("金額"))
-    purch_date = models.DateField(_("日期"), )
+    purch_date = models.DateField(_("日期"), default=datetime.date.today())
     create_date = models.DateTimeField(_("建立時間"), auto_now_add=True)
 
     def __str__(self):
