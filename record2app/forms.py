@@ -138,11 +138,22 @@ class RecordForm(forms.ModelForm):
     #     ) 
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class RecordForm2(forms.ModelForm):
     class Meta:
         model=Record
         fields = ['flow_type','item', 'amount', 'purch_date']
-    """
+        widgets = {
+                'purch_date': DateInput()
+        }
+    '''
+    def __init__(self, *args, **kwargs):
+        super(RecordForm2, self).__init__(*args, **kwargs)
+        self.fields['purch_date'].widget.attrs.update({'type':'date'})
+        '''
+    '''
     def __init__(self, *args, **kwargs):
         super(RecordForm2, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -161,5 +172,5 @@ class RecordForm2(forms.ModelForm):
                 Submit('submit', '存檔'),
                 Submit('cancel', '取消', css_class='btn-warning')
             )
-        )"""
+        )'''
 
