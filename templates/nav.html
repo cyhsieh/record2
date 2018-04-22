@@ -1,6 +1,5 @@
 <nav class="navbar navbar-default navbar-fix-top" role="navigation">
                 <div class="navbar-header">
-                     
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                          <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </button> <a class="navbar-brand" href="/">記帳系統</a>
@@ -8,11 +7,11 @@
                 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active">
+                      <li class="{% if request.resolver_match.url_name == 'new_record2' %}active {% endif %}">
                             <a href="/new_record2">新增</a>
                         </li>
-                        <li>
-                            <a href="#">Link</a>
+                        <li class="{% if request.resolver_match.url_name == 'new_record_cli' %}active {% endif %}">
+                          <a href="{% url 'new_record_cli' %}">文字新增</a>
                         </li>
                         <li class="dropdown">
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>

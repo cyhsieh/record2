@@ -17,18 +17,22 @@ from django.contrib import admin
 from record2app import views
 from movies import views as movieviews
 from testapp import views as testviews
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('record_cv/', views.RecordListView.as_view()),
+    # path('record/<int:pk>', views.RecordDetailView.as_view(), name='record-detail'),
+    re_path(r'record/(?P<pk>\d+)', views.RecordDetailView.as_view(), name='record-detail'),
     url(r'^$', views.list_record),
     # url(r'^list_bulletin$', views.list_bulletin),
     # url(r'^new_bulletin$', views.new_bulletin),
     # url(r'^edit_bulletin/(\d+)/$', views.edit_bulletin),
     url(r'^list_record/$', views.list_record),
     # url(r'^new_record/$', views.new_record),
-    url(r'^new_record2/$', views.new_record2),
+    url(r'^new_record2/$', views.new_record2, name='new_record2'),
+    url(r'^new_record_cli/$', views.new_record_cli, name='new_record_cli'),
     url(r'^edit_record/(\d+)/$', views.edit_record),
     url(r'^delete_record/(\d+)/$', views.delete_record),
     url(r'^testindex/$', testviews.testindex)

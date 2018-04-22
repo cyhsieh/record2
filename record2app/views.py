@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from record2app import forms
 from record2app.models import Bulletin, Record
+from django.views.generic import ListView, DetailView
+from record2app.recParser import Rec_parser
 
 # Create your views here.
 def new_bulletin(request):
@@ -46,7 +48,6 @@ def list_record(request):
     records = Record.objects.all().order_by('-purch_date', '-create_date')
     return render(request, "list_record.html", locals()) 
 
-
 '''
 def new_record(request):
     title = "新增紀錄"
@@ -66,6 +67,18 @@ def new_record2(request):
     else:
         record_form = forms.RecordForm2()
         return render(request, "new_record2.html", locals())
+
+def new_record_cli(request):
+    title = "文字新增記帳"
+    if request.method=="POST":
+        # received date => transfer rec
+        enter_text = request.POST['enter_area']
+        result_text = "you entered is:\n"+enter_text
+        result_text = rec_parse(enter_text)
+        return render(request, "new_record_cli.html", locals())
+    else:
+        #blank cli page
+        return render(request, "new_record_cli.html", locals())
 
 def edit_record(request, id=None):
     if request.method == "POST":
@@ -90,6 +103,31 @@ def delete_record(request, id=None):
     del_rec.delete()
     return redirect('/list_record')
 
+class RecordListView(ListView):
+    model = Record
 
+class RecordDetailView(DetailView):
+    # context_object_name = 'record'
+    # queryset = Record.objects.all()
+    model = Record
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['record_list'] = Record.objects.all()
+        return context
 
+def rec_parse(rec_lines):
+    result = ""
+    Parser = Rec_parser()
+    for line in rec_lines.splitlines():
+        # result = result + Rec_parser.rec_match(line) + "\n"
+        parsed_rec = Parser.rec_match(line)
+        # fulldate = 
+        if parsed_rec['pat_name'] == 'payrec':
+            pass
+            # result = result + "%s"
+        
+        for key in parsed_rec:
+            result = result + key + ":" + parsed_rec[key] + "\n"
+        result=result+"---------\n"
+    return result
