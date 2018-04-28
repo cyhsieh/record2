@@ -116,7 +116,7 @@ def edit_record(request, id=None):
 def delete_record(request, id=None):
     del_rec = Record.objects.get(id=id)
     del_rec.delete()
-    return redirect('/list_record')
+    return redirect('list_record')
 
 class RecordListView(ListView):
     model = Record
