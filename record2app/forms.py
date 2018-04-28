@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms import layout, bootstrap
-from record2app.models import Bulletin, Record
+from record2app.models import Bulletin, Record, TobuyItem
 
 class BulletinForm(forms.ModelForm):
     class Meta:
@@ -59,63 +59,6 @@ class BulletinForm(forms.ModelForm):
         
 
 
-class ExampleForm(forms.Form):
-    like_website = forms.TypedChoiceField(
-        label = "Do you like this website?",
-        choices = ((1, "Yes"), (0, "No")),
-        coerce = lambda x: bool(int(x)),
-        widget = forms.RadioSelect,
-        initial = '1',
-        required = True,
-    )
-
-    favorite_food = forms.CharField(
-        label = "What is your favorite food?",
-        max_length = 80,
-        required = True,
-    )
-
-    favorite_color = forms.CharField(
-        label = "What is your favorite color?",
-        max_length = 80,
-        required = True,
-    )
-
-    favorite_number = forms.IntegerField(
-        label = "Favorite number",
-        required = False,
-    )
-
-    notes = forms.CharField(
-        label = "Additional notes or feedback",
-        required = False,
-    )
-    # def __init__(self, *args, **kwargs):
-    #     super(ExampleForm, self).__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.form_id = 'id-exampleForm'
-    #     self.helper.form_class = 'blueForms'
-    #     self.helper.form_method = 'post'
-    #     self.helper.form_action = 'submit_survey'
-
-    #     self.helper.add_input(Submit('submit', 'Submit'))
-
-    def __init__(self, *args, **kwargs):
-        super(ExampleForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = layout.Layout(
-            layout.Fieldset(
-                'first arg is the legend of the fieldset',
-                'like_website',
-                'favorite_number',
-                'favorite_color',
-                'favorite_food',
-                'notes'
-            ),
-            layout.ButtonHolder(
-                Submit('submit', 'Submit', css_class='button white')
-            )
-        )
 
 class RecordForm(forms.ModelForm):
     class Meta:
@@ -148,29 +91,52 @@ class RecordForm2(forms.ModelForm):
         widgets = {
                 'purch_date': DateInput()
         }
-    '''
-    def __init__(self, *args, **kwargs):
-        super(RecordForm2, self).__init__(*args, **kwargs)
-        self.fields['purch_date'].widget.attrs.update({'type':'date'})
-        '''
-    '''
-    def __init__(self, *args, **kwargs):
-        super(RecordForm2, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_action = "."
-        self.helper.form_method = "POST"
 
+class RecordForm3(forms.ModelForm):
+    class Meta:
+        model = Record
+        exclude = []
+    def __init__(self, *args, **kwargs):
+        super(RecordForm3, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.fields['purch_date'].widget = DateInput()
         self.helper.layout = layout.Layout(
-            layout.Fieldset(
-                'input_field',
-                'function_field',
-            ),
-            layout.Fieldset(
-                
-            ),
-            layout.ButtonHolder(
-                Submit('submit', '存檔'),
-                Submit('cancel', '取消', css_class='btn-warning')
-            )
-        )'''
+                bootstrap.InlineRadios('flow_type'),
+                layout.Field('item'),
+                layout.Field('amount'),
+                layout.Field('purch_date'),
+                layout.ButtonHolder(
+                    Submit('submit', '送出', css_class='button white'),
+                    layout.HTML("<a href='{% url 'list_record' %}' class='btn btn-warning'>取消</a>")
+                    )
+                )
+
+
+class TobuyItemForm(forms.ModelForm):
+    class Meta:
+        model = TobuyItem
+        fields = ['itemname', 'budget']
+
+class TobuyForm2(forms.ModelForm):
+    class Meta:
+        model = TobuyItem
+        exclude = []
+
+    def __init__(self, *args, **kwargs):
+        super(TobuyForm2, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.fields['tobuy_date'].widget = DateInput()
+        self.helper.layout = layout.Layout(
+                _('待買表單'),
+                layout.Field('itemname'),
+                layout.Field('budget'),
+                layout.Field('tobuy_date'),
+                bootstrap.InlineRadios('tobuy_type'),
+                # layout.Fieldset(
+                    # ),
+                layout.ButtonHolder(
+                    Submit('submit', '送出', css_class='button white')
+                    )
+                )
+        # fields = ['itemname', 'budget', 'tobuy_type']
 

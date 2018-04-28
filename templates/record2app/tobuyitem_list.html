@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ title }}</h2>
+  <table class="table">
+    <tr>
+      <th>名稱</th>
+      <th>預算</th>
+      <th>類型</th>
+      <th>預計購買日期</th>
+    </tr>
+    {% for item in tobuyitems %}
+    <tr>
+      <td><a href="{% url 'edit_tobuy' item.pk %}">{{item.itemname}}</a></td>
+      <td>{{item.budget}}</td>
+      <td>{{item.get_tobuy_type_display}}</td>
+      <td>{{item.tobuy_date|date:'n/d'}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

@@ -10,7 +10,7 @@ TYPE_CHOICES = (
 )
 
 MONEY_FLOW = (
-    ('支出', _("支出")), ('收入', _("收入"))
+    ('in', _("支出")), ('out', _("收入"))
 )
 
 COST_TYPE = (
@@ -57,8 +57,15 @@ class testClass(models.Model):
 
     #def __str__(self):
     #    return self.typea
+TOBUY_TYPE_CHOICE = (
+        ('want','想要'),('need','需要')
+        )
+class TobuyItem(models.Model):
+    itemname = models.CharField(max_length=20, verbose_name="名稱")
+    budget = models.IntegerField(verbose_name="預算")
+    tobuy_type = models.CharField(max_length=10,choices=TOBUY_TYPE_CHOICE, verbose_name="需要/想要", default=TOBUY_TYPE_CHOICE[0][0])
+    tobuy_date = models.DateField(verbose_name="預定購買日期", null=True, blank=True)
+    addtime = models.DateTimeField(verbose_name="加入時間", auto_now_add=True)
 
-
-
-
-
+    def __str__(self):
+        return self.itemname

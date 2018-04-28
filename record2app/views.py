@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django import forms as djforms
 from record2app import forms
-from record2app.models import Bulletin, Record
+from record2app.models import Bulletin, Record, TobuyItem
 from django.views.generic import ListView, DetailView
 from record2app.recParser import Rec_parser
 
@@ -68,6 +69,20 @@ def new_record2(request):
         record_form = forms.RecordForm2()
         return render(request, "new_record2.html", locals())
 
+def recordform(request, pk=None, template_name="record2app/recordform.html"):
+    record = Record()
+    try:
+        record = Record.objects.get(id=pk)
+        title = "修改紀錄"
+    except:
+        title = "新增紀錄"
+    form = forms.RecordForm3(request.POST or None, instance=record)
+    if form.is_valid():
+        form.save()
+        return redirect('list_record')
+    return render(request, template_name, locals())
+
+
 def new_record_cli(request):
     title = "文字新增記帳"
     if request.method=="POST":
@@ -131,3 +146,30 @@ def rec_parse(rec_lines):
             result = result + key + ":" + parsed_rec[key] + "\n"
         result=result+"---------\n"
     return result
+
+class TobuyItemView(ListView):
+    model = TobuyItem
+    context_object_name = 'tobuyitems'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "待買項目"
+        return context
+# class TobuyForm(forms.
+
+def TobuyForm(request,pk=None, template_name="record2app/tobuyform.html"):
+    # tobuyitem = get_object_or_404(TobuyItem, id=pk)
+    # tobuyitem = TobuyItem.objects.get(id=pk)
+    tobuyitem = TobuyItem()
+    try:
+        tobuyitem = TobuyItem.objects.get(id=pk)
+        title = "修改待買項目"
+    except:
+        title = "新增待買項目"
+    # form = forms.TobuyItemForm(request.POST or None, instance=tobuyitem)
+    form = forms.TobuyForm2(request.POST or None, instance=tobuyitem)
+    if form.is_valid():
+        form.save()
+        return redirect("list_tobuy")
+    return render(request, template_name, locals())
+

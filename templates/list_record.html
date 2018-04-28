@@ -14,10 +14,10 @@
         </thead>
         {% for record in records %}
             <tr>
-              <!--<td>{{ record.id }}</td>-->
-                <td>{{ record.purch_date }}</td>
-                <td><a href="/edit_record/{{ record.id }}">{{ record.item }}</a></td>
-                <td>{{ record.flow_type }}</td>
+                <td>{{ record.purch_date|date:'Y/n/d' }}</td>
+                {#<td><a href="/edit_record/{{ record.id }}">{{ record.item }}</a></td>#}
+                <td><a href="{% url 'edit_record3' record.pk %}">{{ record.item }}</a></td>
+                <td>{{ record.get_flow_type_display }}</td>
                 <td>{{ record.amount }}</td>
                 <td><a href="/delete_record/{{ record.id}}"><span class='glyphicon glyphicon-remove'></span></a></td>
             </tr>
