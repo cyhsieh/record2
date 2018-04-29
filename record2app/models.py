@@ -10,7 +10,7 @@ TYPE_CHOICES = (
 )
 
 MONEY_FLOW = (
-    ('in', _("支出")), ('out', _("收入"))
+    ('in', _("收入")), ('out', _("支出"))
 )
 
 COST_TYPE = (

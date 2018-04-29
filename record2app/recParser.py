@@ -1,4 +1,5 @@
 import re
+from datetime import date
 class Rec_parser:
     patterns={"date":r"(?P<date>\d{4}) (?P<weekday>\w{1})",
             "receiverec":r"[+]{1}(?P<item>.*) (?P<amount>\d+)",
@@ -32,25 +33,26 @@ class Rec_parser:
     @classmethod
     def date(self, pat_name, pat, rec_line):
         pars = re.match(pat, rec_line)
-        self.recdate=pars.group('date')
+        self.recdate="%s-%s-%s"%(date.today().strftime('%Y'),
+                pars.group('date')[:2], pars.group('date')[2:])
         self.recweekday=pars.group('weekday')
         # print("in this rec, date is %s and weekday is %s" 
                 # %(self.recdate, self.recweekday))
-        return {"pat_name":pat_name, "pat":pat, 'data':self.recdate, 'weekday':self.recweekday}
+        return {"pat_name":pat_name, "pat":pat, 'date':self.recdate, 'weekday':self.recweekday}
 
     @classmethod
     def payrec(self, pat_name, pat, rec_line):
         result = re.match(pat,rec_line)
         # print("%s cost item is %s, amount is %d" 
                 # %(self.recdate,result.group('item'),int(result.group('amount'))))
-        return {"pat_name":pat_name, 'pat':pat, 'item':result.group('item'), 'amount':result.group('amount')}
+        return {"pat_name":pat_name, 'pat':pat, 'item':result.group('item'), 'amount':result.group('amount'), 'date':self.recdate}
 
     @classmethod
     def receiverec(self, pat_name, pat, rec_line):
         result = re.match(pat,rec_line)
         # print("receive item is %s, amount is %d"
                 # %(result.group('item'),int(result.group('amount'))))
-        return {"pat_name":pat_name, 'pat':pat, 'item':result.group('item'), 'amount':result.group('amount')}
+        return {"pat_name":pat_name, 'pat':pat, 'item':result.group('item'), 'amount':result.group('amount'), 'date':self.recdate}
 
     @classmethod
     def transferrec(self, pat_name, pat, rec_line):

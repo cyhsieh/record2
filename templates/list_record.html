@@ -14,7 +14,7 @@
         </thead>
         {% for record in records %}
             <tr>
-                <td>{{ record.purch_date|date:'Y/n/d' }}</td>
+                <td>{{ record.purch_date|date:'Y/n/d D' }}</td>
                 {#<td><a href="/edit_record/{{ record.id }}">{{ record.item }}</a></td>#}
                 <td><a href="{% url 'edit_record3' record.pk %}">{{ record.item }}</a></td>
                 <td>{{ record.get_flow_type_display }}</td>
@@ -23,4 +23,25 @@
             </tr>
         {% endfor %}
     </table>
+    {% if records.has_other_pages %}
+    <ul class="pagination">
+      {% if records.has_previous %}
+      <li><a href="#">&laquo;</a></li>
+      {% else %}
+      <li class="disabled"><a href="#">&laquo;</a></li>
+      {% endif %}
+      {% for page_number in records.paginator.page_range %}
+        {% if page_number == records.number %}
+          <li class="active"><span>{{page_number}} <span class="sr=only">(current)</span></span></li>
+        {% else %}
+          <li><a href="#">{{page_number}}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if records.has_next %}
+      <li><a href="#">&raquo;</a></li>
+      {% else %}
+      <li class="disabled"><a href="#">&raquo;</a></li>
+      {% endif %}
+    </ul>
+    {% endif %}
 {% endblock %}

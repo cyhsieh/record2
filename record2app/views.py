@@ -4,6 +4,7 @@ from record2app import forms
 from record2app.models import Bulletin, Record, TobuyItem
 from django.views.generic import ListView, DetailView
 from record2app.recParser import Rec_parser
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
 
 # Create your views here.
 def new_bulletin(request):
@@ -47,6 +48,21 @@ def edit_bulletin(request,id=None):
 def list_record(request):
     title = "記帳紀錄"
     records = Record.objects.all().order_by('-purch_date', '-create_date')
+    return render(request, "list_record.html", locals()) 
+
+def list_record2(request, page=None):
+    title = "記帳紀錄"
+    qs = Record.objects.all().order_by('-purch_date', '-create_date')
+    paginator = Paginator(qs,5)
+    page_number = request.GET.get('page')
+
+    try:
+        records = paginator.page(page_number)
+    except PageNotAnInteger:
+        records = paginator.page(1)
+    except EmptyPage:
+        records = paginator.page(paginator.num_pages)
+
     return render(request, "list_record.html", locals()) 
 
 '''
@@ -137,13 +153,32 @@ def rec_parse(rec_lines):
     for line in rec_lines.splitlines():
         # result = result + Rec_parser.rec_match(line) + "\n"
         parsed_rec = Parser.rec_match(line)
-        # fulldate = 
-        if parsed_rec['pat_name'] == 'payrec':
-            pass
-            # result = result + "%s"
-        
+        # fulldate =
         for key in parsed_rec:
             result = result + key + ":" + parsed_rec[key] + "\n"
+#
+        if parsed_rec['pat_name'] == 'payrec' or parsed_rec['pat_name'] == 'payrec':
+            #find if exist or not
+            r = Record.objects.filter(flow_type='out',purch_date=parsed_rec['date'],\
+                    item=parsed_rec['item'],amount=parsed_rec['amount']).exists()
+            if r:
+                result = result + "exists!\n"
+                result=result+"---------\n"
+                continue
+
+        if parsed_rec['pat_name'] == 'payrec':
+            record = Record(flow_type='out', item=parsed_rec['item'], 
+                    amount=parsed_rec['amount'], purch_date=parsed_rec['date'])
+            record.save()
+            result = result + "saved!\n"
+        elif parsed_rec['pat_name'] == 'receiverec':
+            record = Record(flow_type='in', item=parsed_rec['item'], 
+                    amount=parsed_rec['amount'], purch_date=parsed_rec['date'])
+            record.save()
+            result = result + "saved!\n"
+            # pass
+            # result = result + "%s"
+        
         result=result+"---------\n"
     return result
 

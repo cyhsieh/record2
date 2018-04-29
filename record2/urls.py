@@ -30,6 +30,7 @@ urlpatterns = [
     # url(r'^new_bulletin$', views.new_bulletin),
     # url(r'^edit_bulletin/(\d+)/$', views.edit_bulletin),
     url(r'^list_record/$', views.list_record),
+    re_path('^list_record2/(?P<page>\d+)$', views.list_record2, name="list_record2"),
     path('new_record3/', views.recordform, name="new_record3"),
     re_path('^edit_record3/(?P<pk>\d+)$', views.recordform, name="edit_record3"),
     # url(r'^new_record/$', views.new_record),
