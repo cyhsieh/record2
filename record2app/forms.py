@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms import layout, bootstrap
-from record2app.models import Bulletin, Record, TobuyItem
+from record2app.models import Bulletin, Record, TobuyItem, Sport
 
 class BulletinForm(forms.ModelForm):
     class Meta:
@@ -140,3 +140,20 @@ class TobuyForm2(forms.ModelForm):
                 )
         # fields = ['itemname', 'budget', 'tobuy_type']
 
+class SportForm(forms.ModelForm):
+    class Meta:
+        model = Sport
+        exclude = []
+    def __init__(self, *args, **kwargs):
+        super(SportForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.fields['sport_date'].widget=DateInput()
+        self.helper.layout = layout.Layout(
+                # _("運動項目"),
+                bootstrap.InlineRadios('user'),
+                layout.Field('sport_item'),
+                layout.Field('sport_date'),
+                layout.ButtonHolder(
+                    Submit('submit', '送出')
+                    )
+                )

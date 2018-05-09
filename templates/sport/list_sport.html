@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ title }}</h2>
+<table class="table">
+  <th>日期</th>
+  <th>運動項目</th>
+  <th>姓名</th>
+  {% for sport in sports %}
+  <tr>
+    <td>{{sport.sport_date|date:'Y/n/d'}}</td>
+    <td><a href="{% url 'edit_sport' sport.pk %}">{{sport.sport_item}}</a></td>
+    <td>{{sport.get_user_display}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

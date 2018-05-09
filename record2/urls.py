@@ -46,4 +46,7 @@ urlpatterns = [
     path('list_tobuy/', views.TobuyItemView.as_view(), name="list_tobuy"),
     path('new_tobuy/', views.TobuyForm, name="new_tobuy"),
     re_path('^edit_tobuy/(?P<pk>\d+)$', views.TobuyForm, name="edit_tobuy"),
+    path('list_sport/', views.list_sport, name="list_sport"),
+    path('new_sport/', views.SportForm, name="new_sport"),
+    re_path('^edit_sport/(?P<pk>\d+)$', views.SportForm, name="edit_sport"),
 ]

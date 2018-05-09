@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django import forms as djforms
 from record2app import forms
-from record2app.models import Bulletin, Record, TobuyItem
+from record2app.models import Bulletin, Record, TobuyItem, Sport
 from django.views.generic import ListView, DetailView
 from record2app.recParser import Rec_parser
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
@@ -151,7 +151,8 @@ def rec_parse(rec_lines):
     result = ""
     Parser = Rec_parser()
     for line in rec_lines.splitlines():
-        # result = result + Rec_parser.rec_match(line) + "\n"
+        if len(line)==0:
+            continue
         parsed_rec = Parser.rec_match(line)
         # fulldate =
         for key in parsed_rec:
@@ -208,3 +209,20 @@ def TobuyForm(request,pk=None, template_name="record2app/tobuyform.html"):
         return redirect("list_tobuy")
     return render(request, template_name, locals())
 
+def list_sport(request):
+    title = "運動項目"
+    sports = Sport.objects.all()
+    return render(request, "sport/list_sport.html", locals())
+
+def SportForm(request, pk=None, template_name="sport/sportform.html"):
+    sport = Sport()
+    try:
+        sport = Sport.objects.get(id=pk)
+        title = "修改運動項目"
+    except:
+        title = "新增運動項目"
+    form = forms.SportForm(request.POST or None, instance=sport)
+    if form.is_valid():
+        form.save()
+        return redirect("list_sport")
+    return render(request, template_name, locals())
