@@ -226,3 +226,30 @@ def SportForm(request, pk=None, template_name="sport/sportform.html"):
         form.save()
         return redirect("list_sport")
     return render(request, template_name, locals())
+
+def ac662(request):
+    try:
+        tosite = request.GET.get('site')
+    except:
+        pass
+    return render(request, "ac66.html",locals())
+
+def ac66(request, site):
+    tosite=""
+    if request.method=="POST":
+        redirecturl = request.POST.get("redirecturl")
+        message = "redirecturl is {}".format(redirecturl)
+        tosite=redirecturl
+        # return render(request,"ac66.html",locals())
+        return redirect('/ac66?site='+redirecturl)
+    # tosite = "https://www.bing.com"
+    # site = "pchome"
+    if site == "pchome":
+        tosite = "https://ecshweb.pchome.com.tw/search/v3.3/?q=ac66u%2B&scope=all"
+    elif site == "momo":
+        tosite = "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=ac66u%2B&searchType=1&curPage=1&_isFuzzy=0&showType=chessboardType"
+    elif site == "yahoo":
+        tosite = "https://tw.search.buy.yahoo.com/search/shopping/product?p=ac66u%2B&qt=product&cid=0&clv=0&cid_path="
+    message = "site is {}, tosite is {}".format(site,tosite)
+    return render(request, "ac66.html",locals())
+

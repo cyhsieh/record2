@@ -49,4 +49,6 @@ urlpatterns = [
     path('list_sport/', views.list_sport, name="list_sport"),
     path('new_sport/', views.SportForm, name="new_sport"),
     re_path('^edit_sport/(?P<pk>\d+)$', views.SportForm, name="edit_sport"),
+    url(r'^ac66/(?P<site>.+)/$', views.ac66, name="ac66"),
+    path('ac662/', views.ac662),
 ]

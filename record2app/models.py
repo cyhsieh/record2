@@ -71,11 +71,16 @@ class TobuyItem(models.Model):
         return self.itemname
 
 users = (("atheq33","大親親"),("qqqq","小親親"))
+sport_items = (("stair","爬樓梯"),("bicycle","腳踏車"))
+unit = (("stairs","層樓"),("mins","分鐘"),("other","其他"))
 
 class Sport(models.Model):
     user = models.CharField(max_length=10, verbose_name="姓名", choices=users, default=users[0][0])
-    sport_item = models.CharField(max_length=20,verbose_name="運動項目")
+    sport_item = models.CharField(max_length=20,verbose_name="運動項目",choices=sport_items,default=sport_items[0][0])
+    sport_quantity = models.IntegerField(default=0,verbose_name="數量")
+    sport_unit = models.CharField(verbose_name="單位",max_length=10, choices=unit, default=unit[0][0])
     sport_date = models.DateField(verbose_name="日期", default=datetime.date.today())
     def __str__(self):
         return self.sport_item
+
 

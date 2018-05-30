@@ -151,7 +151,9 @@ class SportForm(forms.ModelForm):
         self.helper.layout = layout.Layout(
                 # _("運動項目"),
                 bootstrap.InlineRadios('user'),
-                layout.Field('sport_item'),
+                bootstrap.InlineRadios('sport_item'),
+                layout.Field('sport_quantity'),
+                bootstrap.InlineRadios('sport_unit'),
                 layout.Field('sport_date'),
                 layout.ButtonHolder(
                     Submit('submit', '送出')
