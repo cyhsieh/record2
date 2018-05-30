@@ -8,7 +8,7 @@
       {% for sport in sports %}
       <tr>
         <td>{{sport.sport_date|date:'Y/n/d'}}</td>
-        <td><a href="{% url 'edit_sport' sport.pk %}">{{sport.sport_item}}</a></td>
+        <td><a href="{% url 'edit_sport' sport.pk %}">{{sport.get_sport_item_display}}{{sport.sport_quantity}}{{sport.get_sport_unit_display}}</a></td>
         <td>{{sport.get_user_display}}</td>
       </tr>
       {% endfor %}
